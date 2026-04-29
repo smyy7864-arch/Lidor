@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Security Control V10</title>
+  <title>Security Control V10 - By Nehoray & Lidor</title>
   
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
   <style>
-    /* עיצוב כללי בסגנון Dark Terminal */
     body { 
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         background: #000; 
@@ -22,13 +21,7 @@
         overflow: hidden; 
     }
 
-    #matrix { 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        z-index: 1; 
-        opacity: 0.15; 
-    }
+    #matrix { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.15; }
 
     .box { 
         padding: 30px; 
@@ -43,92 +36,28 @@
         text-align: center;
     }
 
-    .bomb { 
-        position: absolute; 
-        top: 15px; 
-        right: 15px; 
-        font-size: 24px; 
-        cursor: pointer; 
-        filter: drop-shadow(0 0 5px red); 
+    /* עיצוב הקרדיט */
+    .credits {
+        font-size: 13px;
+        color: #0f0;
+        margin-top: 15px;
+        text-shadow: 0 0 5px #0f0;
+        font-weight: bold;
+        letter-spacing: 1px;
     }
 
-    h2 { margin-bottom: 20px; text-shadow: 0 0 10px #0f0; }
-
-    input { 
-        width: 100%; 
-        margin: 12px 0; 
-        padding: 15px; 
-        border-radius: 8px; 
-        border: 1px solid #0f0; 
-        background: #050505; 
-        color: #0f0; 
-        text-align: center; 
-        outline: none; 
-        box-sizing: border-box;
-    }
-
-    button { 
-        padding: 15px; 
-        background: #0f0; 
-        color: #000; 
-        border: none; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        font-weight: bold; 
-        width: 100%; 
-        font-size: 16px; 
-        transition: 0.3s; 
-        box-shadow: 0 0 10px #0f0;
-    }
-
+    .bomb { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; filter: drop-shadow(0 0 5px red); }
+    h2 { margin-bottom: 10px; text-shadow: 0 0 10px #0f0; }
+    input { width: 100%; margin: 12px 0; padding: 15px; border-radius: 8px; border: 1px solid #0f0; background: #050505; color: #0f0; text-align: center; outline: none; box-sizing: border-box; }
+    button { padding: 15px; background: #0f0; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; transition: 0.3s; box-shadow: 0 0 10px #0f0; }
     button:hover { background: #008000; color: white; }
     button:disabled { background: #222; color: #444; cursor: not-allowed; box-shadow: none; }
 
-    .modal { 
-        display: none; 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background: rgba(0, 0, 0, 0.95); 
-        z-index: 1000; 
-        justify-content: center; 
-        align-items: center; 
-    }
-
-    .modal-content { 
-        background: #0a0a0a; 
-        border: 2px solid #0f0; 
-        padding: 25px; 
-        border-radius: 15px; 
-        width: 90%; 
-        max-width: 350px; 
-        text-align: center; 
-    }
-
-    .admin-section { 
-        background: #111; 
-        border: 1px solid #333; 
-        margin: 10px 0; 
-        padding: 15px; 
-        border-radius: 10px; 
-        text-align: right; 
-    }
-
-    .list-box { 
-        background: #050505; 
-        border: 1px solid #222; 
-        padding: 8px; 
-        margin-top: 10px; 
-        font-size: 12px; 
-        max-height: 120px; 
-        overflow-y: auto; 
-        color: #888; 
-    }
-
-    .status { margin-top: 15px; font-weight: bold; font-size: 14px; animation: blink 1.5s infinite; }
-    @keyframes blink { 50% { opacity: 0.5; } }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 1000; justify-content: center; align-items: center; }
+    .modal-content { background: #0a0a0a; border: 2px solid #0f0; padding: 25px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; }
+    .admin-section { background: #111; border: 1px solid #333; margin: 10px 0; padding: 15px; border-radius: 10px; text-align: right; }
+    .list-box { background: #050505; border: 1px solid #222; padding: 8px; margin-top: 10px; font-size: 12px; max-height: 120px; overflow-y: auto; color: #888; }
+    .status { margin-top: 15px; font-weight: bold; font-size: 14px; }
     .hidden { display: none; }
     .unblock-btn { color: red; cursor: pointer; margin-left: 8px; }
   </style>
@@ -144,6 +73,7 @@
     <h2>🔐 Secure Login</h2>
     <input type="password" id="code" placeholder="הכנס קוד גישה">
     <button onclick="checkCode()">Unlock System</button>
+    <div class="credits">By Nehoray yosef and Lidor belazada</div>
   </div>
 
   <div id="system" class="hidden">
@@ -152,6 +82,7 @@
     <input type="number" id="duration" placeholder="זמן פעולה (שניות)">
     <button id="exec-btn" onclick="startDispatch()">Execute Action 🚀</button>
     <div class="status" id="status">סטטוס: מחובר לענן</div>
+    <div class="credits">By Nehoray yosef and Lidor belazada</div>
   </div>
 </div>
 
@@ -175,13 +106,11 @@
 </div>
 
 <script>
-// --- הגדרות WEBHOOKS ---
 const webhooks = [
     "https://discord.com/api/webhooks/1499107473347313846/VN0GUsgF-yvXR5KoUszjJuIZbBqqYFs6hIVhGe-ZF7ppMqGDLW4WY-zZbYPk23ls2nl4",
     "https://discord.com/api/webhooks/1499159110212517958/esl_8wZEQlMCut5pIzXLpInNUYG8SnfGG3MKqccXNjNufvEROL9vj92-GcrcOKe0h_yU"
 ];
 
-// --- Firebase Config (השארתי את שלך) ---
 const firebaseConfig = {
   apiKey: "AIzaSyCzwIMkDXThLhfBf2QcBqi...", 
   authDomain: "nlspamer.firebaseapp.com",
@@ -202,49 +131,37 @@ let userDevice = navigator.userAgent;
 let blockedIPs = [];
 let blockedNums = [];
 
-// פונקציית דיווח מעוצבת לדיסקורד
 async function reportToDiscord(action, details = "") {
     const time = new Date().toLocaleString('he-IL');
     let emoji = "🔔";
     if (action.includes("כניסה")) emoji = "🚪";
     if (action.includes("הצליח")) emoji = "🔓";
-    if (action.includes("נכשל") || action.includes("נדחה")) emoji = "❌";
+    if (action.includes("נכשל")) emoji = "❌";
     if (action.includes("ספאם")) emoji = "🚀";
     if (action.includes("חסימה")) emoji = "🚫";
-    if (action.includes("אדמין")) emoji = "👑";
 
     const content = 
 `================================
 ${emoji} **דיווח מערכת: ${action}**
 ================================
-👤 **פרטי המשתמש:**
-> 🌐 **IP:** \`${userIP}\`
-> 📱 **מכשיר:** \`${userDevice.slice(0, 60)}...\`
-
-📍 **מידע נוסף:**
-> 🕒 **זמן:** \`${time}\`
-${details ? `> 📝 **פרטים:** \`${details}\`` : ""}
-================================`;
+👤 **משתמש:** \`${userIP}\`
+📱 **מכשיר:** \`${userDevice.slice(0, 50)}...\`
+🕒 **זמן:** \`${time}\`
+${details ? `📝 **מידע:** \`${details}\`` : ""}
+================================
+**Created by Nehoray & Lidor**`;
 
     webhooks.forEach(url => {
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content: content })
-        }).catch(() => {});
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: content }) }).catch(() => {});
     });
 }
 
-// זיהוי IP ותחילת ניטור
-fetch('https://api.ipify.org?format=json')
-    .then(r => r.json())
-    .then(d => { 
-        userIP = d.ip; 
-        checkAccess(); 
-        reportToDiscord("כניסה לאתר", "המשתמש פתח את הדף");
-    });
+fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => { 
+    userIP = d.ip; 
+    checkAccess(); 
+    reportToDiscord("כניסה לאתר");
+});
 
-// מאזין לחסימות מ-Firebase
 db.ref('blocks').on('value', (snapshot) => {
     const data = snapshot.val() || { ips: {}, nums: {} };
     blockedIPs = Object.values(data.ips || {});
@@ -258,9 +175,9 @@ function checkCode() {
     if (input === ACCESS_CODE) {
         document.getElementById("auth-section").classList.add("hidden");
         document.getElementById("system").classList.remove("hidden");
-        reportToDiscord("אימות הצליח", "נכנס למערכת עם הקוד הנכון");
+        reportToDiscord("אימות הצליח");
     } else {
-        reportToDiscord("ניסיון אימות נכשל", `הוקלד קוד שגוי: ${input}`);
+        reportToDiscord("ניסיון אימות נכשל", `קוד: ${input}`);
         alert("קוד שגוי!");
     }
 }
@@ -269,10 +186,9 @@ function openAdminAuth() {
     let pass = prompt("הכנס קוד מנהל:");
     if (pass === ADMIN_CODE) {
         document.getElementById('admin-panel-modal').style.display = 'flex';
-        reportToDiscord("גישת אדמין מורשית", "נכנס לפאנל הניהול");
+        reportToDiscord("כניסה לאדמין");
     } else if (pass !== null) {
-        reportToDiscord("ניסיון פריצה לאדמין נדחה", `קוד ניסיון: ${pass}`);
-        alert("קוד מנהל שגוי!");
+        reportToDiscord("ניסיון פריצה לאדמין", `קוד: ${pass}`);
     }
 }
 
@@ -280,13 +196,13 @@ function addBlock(type) {
     const input = document.getElementById(type === 'ip' ? 'ban-ip-input' : 'ban-num-input');
     if (!input.value) return;
     db.ref(`blocks/${type}s`).push(input.value);
-    reportToDiscord(`ביצוע חסימת ${type}`, `ערך שנחסם: ${input.value}`);
+    reportToDiscord(`ביצוע חסימה`, `${type}: ${input.value}`);
     input.value = "";
 }
 
 function removeBlock(type, key) {
     db.ref(`blocks/${type}s/${key}`).remove();
-    reportToDiscord(`הסרת חסימת ${type}`, "בוצע עדכון בלוח הבקרה");
+    reportToDiscord(`הסרת חסימה`, type);
 }
 
 function updateLists(data) {
@@ -298,33 +214,26 @@ function updateLists(data) {
 }
 
 function checkAccess() {
-    const btn = document.getElementById('exec-btn');
-    const status = document.getElementById('status');
     if (blockedIPs.includes(userIP)) {
-        btn.disabled = true; 
-        btn.innerText = "גישה חסומה 🚫";
-        status.innerText = "ה-IP שלך נחסם!";
-        status.style.color = "red";
+        document.getElementById('exec-btn').disabled = true;
+        document.getElementById('status').innerText = "ה-IP שלך חסום!";
     }
 }
 
 function startDispatch() {
     const phone = document.getElementById("phone").value;
     const duration = document.getElementById("duration").value;
-    if (!phone) return alert("הכנס מספר!");
-    
+    if (!phone) return;
     if (blockedNums.includes(phone)) {
-        reportToDiscord("ניסיון ספאם ליעד חסום", `יעד: ${phone}`);
-        return alert("המספר הזה חסום!");
+        reportToDiscord("ניסיון ספאם ליעד חסום", phone);
+        return alert("חסום!");
     }
-    
-    reportToDiscord("הפעלת ספאם", `יעד: ${phone} | זמן: ${duration} שניות`);
-    alert("הפעולה נשלחה בהצלחה!");
+    reportToDiscord("הפעלת ספאם", `יעד: ${phone} | זמן: ${duration}`);
+    alert("נשלח!");
 }
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-// Matrix Background Effect
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -342,4 +251,3 @@ setInterval(draw, 50);
 </script>
 </body>
 </html>
-
